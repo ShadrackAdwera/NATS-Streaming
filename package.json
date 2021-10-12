@@ -4,7 +4,8 @@
   "description": "internal mechanisms of NATS Streaming Service",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish": "nodemon publisher.js",
+    "listen": "nodemon listener.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   },
   "homepage": "https://github.com/ShadrackAdwera/NATS-Streaming#readme",
   "dependencies": {
-    "node-nats-streaming": "^0.3.2"
+    "node-nats-streaming": "^0.3.2",
+    "nodemon": "^2.0.13"
   }
 }
