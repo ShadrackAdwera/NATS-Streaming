@@ -1,0 +1,28 @@
+{
+  "name": "nats",
+  "version": "1.0.0",
+  "description": "internal mechanisms of NATS Streaming Service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShadrackAdwera/NATS-Streaming.git"
+  },
+  "keywords": [
+    "NATS",
+    "NATS",
+    "Streaming",
+    "Service"
+  ],
+  "author": "adwera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShadrackAdwera/NATS-Streaming/issues"
+  },
+  "homepage": "https://github.com/ShadrackAdwera/NATS-Streaming#readme",
+  "dependencies": {
+    "node-nats-streaming": "^0.3.2"
+  }
+}
