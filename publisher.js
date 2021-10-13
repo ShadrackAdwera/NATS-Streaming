@@ -1,7 +1,9 @@
 const nats = require('node-nats-streaming');
 const crypto = require('crypto');
 
-const stan = nats.connect('ticketing','abc', { url: 'http://localhost:4222' });
+console.clear();
+
+const stan = nats.connect('ticketing',crypto.randomUUID().toString(), { url: 'http://localhost:4222' });
 
 stan.on('connect', ()=>{
     const ticketData = JSON.stringify({
