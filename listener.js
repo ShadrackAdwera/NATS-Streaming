@@ -9,7 +9,7 @@ const stan = nats.connect('ticketing', crypto.randomUUID().toString() , {
 
 stan.on('connect', ()=>{
     const listenOpts = stan.subscriptionOptions().setStartWithLastReceived();
-    const subscribe = stan.subscribe('ticket:created', listenOpts);
+    const subscribe = stan.subscribe('ticket:created','orders-service-queue-group', listenOpts);
     subscribe.on('message', (msg)=>{
         console.log(`Message received: [ ${msg.getSequence()} ]`);
         console.log(`Message received: [ ${msg.getData()} ]`);
