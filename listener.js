@@ -11,7 +11,8 @@ stan.on('connect', ()=>{
     const listenOpts = stan
     .subscriptionOptions()
     .setManualAckMode(true)
-    .setDeliverAllAvailable().setDurableName('accounts-service');
+    .setDeliverAllAvailable()
+    .setDurableName('accounts-service');
     const subscribe = stan.subscribe('ticket:created','orders-service-queue-group', listenOpts);
 
     stan.on('close', () => {
@@ -30,3 +31,20 @@ stan.on('connect', ()=>{
 process.on('SIGINT', ()=> stan.close());
 //terminate signal
 process.on('SIGTERM', ()=> stan.close());
+
+class Listener {
+    constructor(subject, queueGroupName, client, ackWait) {
+        this.subject = subject;
+        this.queueGroupName = queueGroupName;
+        this.client = client,
+        this.ackWait = ackWait; //5*1000
+    }
+    subscriptionOptions() {
+        return this.client
+        .subscriptionOptions()
+        .setDeliverAllAvailable()
+        .setManualAckMode(true)
+        .setAckWait(this.ackWait)
+        .setDurableName(this.queueGroupName)
+    }
+}
