@@ -13,3 +13,5 @@ class Publisher {
         })
     }
 }
+
+module.exports = Publisher;

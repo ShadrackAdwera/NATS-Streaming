@@ -1,5 +1,6 @@
 const nats = require('node-nats-streaming');
 const crypto = require('crypto');
+const Publisher = require('./events/base-publisher');
 
 console.clear();
 
@@ -11,11 +12,6 @@ stan.on('connect', ()=>{
         title: 'K8s Event 1',
         price: 2500
     })
-    stan.publish('ticket:created', ticketData, (err, guid)=>{
-        if (err) {
-            console.log('publish failed: ' + err)
-          } else {
-            console.log('published message with guid: ' + guid)
-          }
-    })
+    const publisher = new Publisher('ticket:created', stan);
+    publisher.publish(ticketData);
 })
