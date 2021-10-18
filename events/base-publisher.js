@@ -4,12 +4,15 @@ class Publisher {
         this.client = client;
     }
     publish(data) {
-        this.client.publish(this.subject, JSON.stringify(data), (err,guid)=>{
-            if (err) {
-                console.log('publish failed: ' + err)
-              } else {
-                console.log('published message with guid: ' + guid)
-              }
+        return new Promise((resolve, reject)=>{
+            this.client.publish(this.subject, JSON.stringify(data), (err,guid)=>{
+                if (err) {
+                    console.log('publish failed: ' + err)
+                    return reject(err);
+                  } 
+                    console.log('published message with guid: ' + guid);
+                    resolve();
+            })
         })
     }
 }
