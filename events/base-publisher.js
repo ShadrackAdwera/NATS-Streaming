@@ -4,7 +4,7 @@ class Publisher {
         this.client = client;
     }
     publish(data) {
-        this.client.publish(this.subject, data, (err,guid)=>{
+        this.client.publish(this.subject, JSON.stringify(data), (err,guid)=>{
             if (err) {
                 console.log('publish failed: ' + err)
               } else {
