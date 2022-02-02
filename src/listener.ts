@@ -10,6 +10,11 @@ stan.on('connect', ()=>{
     console.log('Listener connected to NATS');
     //name queue group according to the service listening to the channel
 
+    stan.on('close', () => {
+        console.log('NATS connection closed!');
+        process.exit();
+    });
+
     const options = stan.subscriptionOptions().setManualAckMode(true);
 
     const subscription = stan.subscribe('ticket:created','orders-service-queue-group', options);
@@ -24,3 +29,6 @@ stan.on('connect', ()=>{
         msg.ack();
     })
 })
+
+process.on('SIGINT', ()=> stan.close());
+process.on('SIGTERM', ()=> stan.close());
