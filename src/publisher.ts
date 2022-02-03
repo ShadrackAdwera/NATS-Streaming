@@ -1,5 +1,8 @@
 import nats from 'node-nats-streaming';
 import brypto from 'crypto';
+
+import { TicketCreatedPublisher } from './events/ticket-created-publisher';
+
 console.clear();  
 
 const stan = nats.connect('ticketing','abc', {
@@ -8,13 +11,15 @@ const stan = nats.connect('ticketing','abc', {
 
 stan.on('connect', ()=>{
     console.log('Publisher Connected to Nats');
-    const data = JSON.stringify({
+    const data = {
         id: brypto.randomUUID().toString(),
         title: 'K8s Event',
         price: 65
-    });
+    };
 
-    stan.publish('ticket:created', data, ()=>{
-        console.log('Event published!');
-    })
+    new TicketCreatedPublisher(stan).publish(data);
+
+    // stan.publish('ticket:created', data, ()=>{
+    //     console.log('Event published!');
+    // })
 });
