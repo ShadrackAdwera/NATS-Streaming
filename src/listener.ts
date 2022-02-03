@@ -44,9 +44,7 @@ abstract class Listener {
     listen() {
         const subscription = this.client.subscribe(this.subject, this.queueGroupName, this.subscriptionOptions());
         subscription.on('message', (msg:Message) => {
-            console.log(`
-                Message Received: ${this.subject} from Queue Group: ${this.queueGroupName}
-            `)
+            console.log(`Message Received: ${this.subject} from Queue Group: ${this.queueGroupName}`);
             const parsedData = this.parseMessage(msg);
             this.onMessage(parsedData, msg);
         })
