@@ -71,3 +71,17 @@ abstract class Listener {
         return typeof data === 'string' ? JSON.parse(data) : JSON.parse(data.toString('utf8'))
     } 
 }
+
+class TicketCreatedListener extends Listener {
+    subject = 'ticket:created';
+    queueGroupName = 'payments-service';
+    onMessage(data: any, msg: Message): void {
+        try {
+            console.log(`Event Data: `, data);
+            msg.ack();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
+}
