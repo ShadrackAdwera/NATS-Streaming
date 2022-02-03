@@ -15,22 +15,8 @@ stan.on('connect', ()=>{
         process.exit();
     });
 
-    const options = stan
-    .subscriptionOptions()
-    .setManualAckMode(true)
-    .setDeliverAllAvailable().setDurableName('tickets-service');
+    new TicketCreatedListener(stan).listen();
 
-    const subscription = stan.subscribe('ticket:created', 'queue-group-name' ,options);
-
-    subscription.on('message', (msg: Message)=>{
-        const data = msg.getData();
-
-        if(typeof data === 'string') {
-            console.log(`Received Event, ${msg.getSequence()}, with data: ${data}`);
-        }
-
-        msg.ack();
-    })
 })
 
 process.on('SIGINT', ()=> stan.close());
