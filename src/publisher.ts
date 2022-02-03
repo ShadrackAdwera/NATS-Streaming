@@ -9,7 +9,7 @@ const stan = nats.connect('ticketing','abc', {
     url: 'http://localhost:4222'
 });
 
-stan.on('connect', ()=>{
+stan.on('connect', async()=>{
     console.log('Publisher Connected to Nats');
     const data = {
         id: brypto.randomUUID().toString(),
@@ -17,9 +17,10 @@ stan.on('connect', ()=>{
         price: 65
     };
 
-    new TicketCreatedPublisher(stan).publish(data);
-
-    // stan.publish('ticket:created', data, ()=>{
-    //     console.log('Event published!');
-    // })
+    try {
+        const newPublish = new TicketCreatedPublisher(stan);
+        await newPublish.publish(data);   
+    } catch (error) {
+        console.log(error);
+    }
 });
